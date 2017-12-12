@@ -29,6 +29,7 @@ import org.elasticsearch.common.logging.DeprecationLogger;
 import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.rest.BaseRestHandler;
+import org.elasticsearch.rest.RestChannel;
 import org.elasticsearch.rest.RestController;
 import org.elasticsearch.rest.RestRequest;
 import org.elasticsearch.rest.action.RestStatusToXContentListener;
@@ -89,7 +90,12 @@ public class RestBulkAction extends BaseRestHandler {
         bulkRequest.add(request.content(), defaultIndex, defaultType, defaultRouting, defaultFields,
             defaultFetchSourceContext, defaultPipeline, null, allowExplicitIndex, request.getXContentType());
 
-        return channel -> client.bulk(bulkRequest, new RestStatusToXContentListener<>(channel));
+        return new RestChannelConsumer() {
+            @Override
+            public void accept(RestChannel channel) throws Exception {
+                client.bulk(bulkRequest, new RestStatusToXContentListener<>(channel));
+            }
+        };
     }
 
     @Override

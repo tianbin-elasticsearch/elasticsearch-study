@@ -166,7 +166,12 @@ public class Setting<T> extends ToXContentToBytes {
      * @param properties properties for this setting like scope, filtering...
      */
     public Setting(String key, String defaultValue, Function<String, T> parser, Property... properties) {
-        this(key, s -> defaultValue, parser, properties);
+        this(key, new Function<Settings, String>() {
+            @Override
+            public String apply(Settings s) {
+                return defaultValue;
+            }
+        }, parser, properties);
     }
 
     /**

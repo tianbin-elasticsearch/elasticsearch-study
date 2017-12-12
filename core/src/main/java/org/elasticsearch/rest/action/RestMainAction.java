@@ -25,12 +25,7 @@ import org.elasticsearch.action.main.MainResponse;
 import org.elasticsearch.client.node.NodeClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.rest.BaseRestHandler;
-import org.elasticsearch.rest.BytesRestResponse;
-import org.elasticsearch.rest.RestController;
-import org.elasticsearch.rest.RestRequest;
-import org.elasticsearch.rest.RestResponse;
-import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.rest.*;
 
 import java.io.IOException;
 
@@ -46,7 +41,7 @@ public class RestMainAction extends BaseRestHandler {
 
     @Override
     public RestChannelConsumer prepareRequest(final RestRequest request, final NodeClient client) throws IOException {
-        return channel -> client.execute(MainAction.INSTANCE, new MainRequest(), new RestBuilderListener<MainResponse>(channel) {
+        return (RestChannel channel) -> client.execute(MainAction.INSTANCE, new MainRequest(), new RestBuilderListener<MainResponse>(channel) {
             @Override
             public RestResponse buildResponse(MainResponse mainResponse, XContentBuilder builder) throws Exception {
                 return convertMainResponse(mainResponse, request, builder);

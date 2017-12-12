@@ -190,6 +190,13 @@ public class PathTrie<T> {
         }
     }
 
+    /**
+     * 方法注入
+     *
+     * @param path
+     * @param value
+     */
+
     public void insert(String path, T value) {
         String[] strings = path.split(SEPARATOR);
         if (strings.length == 0) {
