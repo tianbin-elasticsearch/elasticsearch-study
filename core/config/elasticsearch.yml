@@ -85,6 +85,7 @@ gateway.recover_after_nodes: 1
 #
 # Require explicit names when deleting indices:
 #
+
 action.destructive_requires_name: true
 
 #允许跨域
