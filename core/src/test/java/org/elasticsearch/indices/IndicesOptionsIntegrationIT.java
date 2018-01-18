@@ -614,6 +614,8 @@ public class IndicesOptionsIntegrationIT extends ESIntegTestCase {
 
         assertAcked(client().admin().indices().prepareOpen("_all").get());
         try {
+
+
             verify(client().admin().indices().prepareUpdateSettings("barbaz").setSettings(Settings.builder().put("e", "f")), false);
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), startsWith("Can't update non dynamic settings [[index.e]] for open indices [[barbaz"));
